@@ -13,64 +13,29 @@ class TestLoginRegister(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Edge()
 
-    def test_Register_Negatif(self):
+    def test_Register_Positif(self):
         driver = self.driver
         driver.get("http://barru.pythonanywhere.com/daftar")  # buka situs
         driver.maximize_window()
         time.sleep(2)
         driver.find_element(
-            By.CSS_SELECTOR, "#signUp")
-        driver.click()
-        
-        try:
-            elements = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.ID, 'name_register'))
-            )
-            elements.sendkeys("salah") #isi username
+            By.CSS_SELECTOR, "#signUp").click()
+        time.sleep(3)
+        driver.find_element(By.ID, "name_register").send_keys(
+            "septiana")  # isi name
+        time.sleep(1)
+        driver.find_element(By.ID, "email_register").send_keys(
+            "septiana@gmail.com")  # isi email
+        time.sleep(1)
+        driver.find_element(By.ID, "password_register").send_keys(
+            "septiana")  # isi password
+        time.sleep(3)
+        driver.find_element(By.ID, "signup_register").click()
+        time.sleep(3)
 
-            elements = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.ID, 'email_register'))
-            )
-            elements.sendkeys("salah@gmail.com")  # isi email
-
-            elements = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.ID, 'password_register'))
-            )
-            elements.sendkeys("12345")  # isi password
-        
-            elements = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.ID, 'signup_register'))
-            )
-            elements.click() 
-
-            response_message=driver.find_element(
-                By.ID, "swal2-content").text
-            self.assertEqual(response_message, 'Gagal Register!')
-            
-        except:
-            driver.quit()
-
-    # def test_Login_Positif(self):
-    #     driver = self.driver
-    #     driver.get("http://barru.pythonanywhere.com/daftar")  # buka situs
-    #     driver.maximize_window()
-    #     time.sleep(3)
-    #     driver.find_element(By.ID, "email").send_keys(
-    #         "septiana17@gmail.com")  # isi email
-    #     time.sleep(1)
-    #     driver.find_element(By.ID, "password").send_keys(
-    #         "12345678")  # isi password
-    #     time.sleep(1)
-    #     driver.find_element(By.ID, "signin_login").click()
-    #     time.sleep(3)
-
-    #     response_message = driver.find_element(
-    #         By.ID, "swal2-content").text
-    #     self.assertEqual(response_message, 'Anda Berhasil Login')
+        response_message=driver.find_element(
+            By.ID, "swal2-content").text
+        self.assertEqual(response_message, 'Gcreated user!')
 
 
 unittest.main()
